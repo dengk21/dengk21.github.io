@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/06/27/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>Introduction</title>
+    <url>/2024/08/05/hello-world/</url>
+    <content><![CDATA[<center>记录一些有趣的事</center>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Tips Abroad</title>
+    <url>/2024/08/06/Tips-Abroad/</url>
+    <content><![CDATA[<h1 id="境外出行注意（欧洲）"><a href="#境外出行注意（欧洲）" class="headerlink" title="境外出行注意（欧洲）"></a>境外出行注意（欧洲）</h1><h2 id="支付篇"><a href="#支付篇" class="headerlink" title="支付篇"></a>支付篇</h2><h3 id="信用卡"><a href="#信用卡" class="headerlink" title="信用卡"></a>信用卡</h3><p>欧洲几乎所有支付场景都可以使用信用卡支付，一般Visa, Master都可以，支持银联(Union)信用卡的很少，因此最好办理Visa&#x2F;Master的信用卡</p>
+<p>如果没有带信用卡，几乎所有场景也都可以使用现金，通过ATM机也可以直接用银联的银行卡换取外币现金</p>
+<p>在xhs上搜索以及实践可知，国内仅有中国工商银行所办理的“全币种境外信用卡”（如星座卡）支持多个外币，其他银行例如中国银行的全币种境外信用卡实际只支持美元或者少数几种货币，如遇欧元等货币需要根据汇率转换，有一定损失。</p>
+<h3 id="汇与钞"><a href="#汇与钞" class="headerlink" title="汇与钞"></a>汇与钞</h3><p>可以简单理解为汇是可以在银行流通的外币，而钞一旦购入，只能取为现金，无法转账。由于信用卡<strong>无法</strong>进行购汇操作，因此若想在境外使用信用卡，需要搭配一个同银行的借记卡（即一张visa信用卡一张借记卡），使用时，如果信用卡额度不够，需要先使用借记卡进行购汇，再通过转汇操作将外汇转入信用卡中，才可以使用（信用卡中仅有人民币无法完成支付）</p>
+<p>注意：转汇操作可能需要<strong>手机验证</strong></p>
+<h2 id="出行篇"><a href="#出行篇" class="headerlink" title="出行篇"></a>出行篇</h2><h3 id="地图工具"><a href="#地图工具" class="headerlink" title="地图工具"></a>地图工具</h3><p>建议使用Google Map，如果为华为手机，可以安装出境易再安装Google Map</p>
+<p>Google Map可以认为是高德地图的平替版，同时也记录了大部分商家的营业时间、人均消费、菜单、评论（因此可以先选好再出门吃饭），同时也提供了公共交通路线的规划，但需注意，许多时候公共交通路线会有调整，需要及时查看线路是否有schedule modified</p>
+<h3 id="交通与展览票据"><a href="#交通与展览票据" class="headerlink" title="交通与展览票据"></a>交通与展览票据</h3><p>城市内短途可以乘坐地铁、公交等交通工具，具体形式可以参考当地的xhs攻略，总体不是很麻烦。本地人一般不买票，但建议最好买，碰上查票罚款比较麻烦</p>
+<p>长途可以乘坐火车，火车票一般携程上可以直接人民币购买，非常方便，不对号入座</p>
+<p>比较著名的展览馆在携程上基本都可以买到票，当然现场购买也是比较方便，只要不是人数太多导致无法现场购买</p>
+<h2 id="物资篇"><a href="#物资篇" class="headerlink" title="物资篇"></a>物资篇</h2><h3 id="短信"><a href="#短信" class="headerlink" title="短信"></a>短信</h3><p>出境前要检查自己的手机卡能不能在<strong>境外接收短信</strong>（似乎需要开通国际漫游等服务），否则一些需要手机验证码的操作无法进行（比如转汇）</p>
+<h3 id="流量"><a href="#流量" class="headerlink" title="流量"></a>流量</h3><p>建议购买一个当地的手机卡，自带流量，需注意手机卡得在境外激活，在境内激活则无法再使用此手机卡</p>
+<h2 id="住宿篇"><a href="#住宿篇" class="headerlink" title="住宿篇"></a>住宿篇</h2><p>欧洲的酒店一般下午3点可以入住房间，退房则在上午11点前，因此如果到达时间不合适只能将行李暂存在酒店，到时间再办理入住</p>
+<p>酒店一般提供的物品：毛巾、沐浴露、洗发水、吹风机</p>
+<p>需自带：一次性拖鞋、洗漱用品</p>
+]]></content>
+      <tags>
+        <tag>tips</tag>
+      </tags>
   </entry>
 </search>
