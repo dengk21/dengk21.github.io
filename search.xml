@@ -32,6 +32,60 @@
       </tags>
   </entry>
   <entry>
+    <title>基于Proxifier的chatGPT app重连问题解决方法</title>
+    <url>/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文旨在解决windows下正常使用chatGPT中codex时遇到的reconnect 5次并失败问题，最终可以在不影响其他任何应用网络设置的情况下完美解决此问题</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在使用原版codex应用和当前（2026.08）的chatGPT桌面端的codex时，国内使用普通代理软件（如clash verge）时，通常会遇到在正常对话前需要等待一段时间，之后会出现reconnect 5次并失败，随后才能开始使用的情况，如下图所示。</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/%E9%87%8D%E8%BF%9E%E9%97%AE%E9%A2%98.png" alt="reconnect问题" title="reconnect问题" style="display:block;width:75%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<p>这类问题通常不是代理节点失效，而是ChatGPT&#x2F;Codex桌面端会建立多条网络连接。关闭TUN后，其中部分实时连接可能没有成功经过系统代理，因而无法连接OpenAI服务器，并自动重试五次。连续重试五次仍未成功后，界面显示重连失败；部分普通功能可能仍然可用，但依赖实时连接的功能会受到影响。</p>
+<p>目前网络中的解决方案有两个。其一是更改codex的本地配置文件 <code>~/.codex/config.toml</code>，更改codex的网络配置，但此方法可能因为codex&#x2F;chatGPT的版本更新而失效，且部分案例有失败的情况。其二是在使用clash verge等代理软件时，开启TUN模式（虚拟网卡），TUN模式会在系统网络层接管大部分应用的流量，再按照Clash规则进行转发，但TUN模式在部分电脑或网络环境中可能导致其他应用卡顿、掉线或兼容性问题。</p>
+<p>笔者借助Proxifier软件可以成功解决此问题，且不会影响其他应用的网络连接。Proxifier是一款可以定制化将某些应用的网络流量通过指定代理服务器转发的软件，非常适合解决特定应用的网络连接问题。</p>
+<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><h3 id="安装Proxifier"><a href="#安装Proxifier" class="headerlink" title="安装Proxifier"></a>安装Proxifier</h3><p>Proxifier是一款付费软件，提供试用期，可以在网络中搜寻到破解版资源，此处不提供安装和破解方法。建议安装Proxifier Standard Edition，笔者后续以Proxifier Standard Edition v4.14 x64为例进行说明。</p>
+<h3 id="配置Proxifier"><a href="#配置Proxifier" class="headerlink" title="配置Proxifier"></a>配置Proxifier</h3><p>打开Proxifier，点击菜单栏的Profile -&gt; Proxy Servers，添加一个新的代理服务器，填写你使用的代理软件（如clash verge）的本地代理地址（127.0.0.1）和端口（端口请填写 Clash Verge或对应代理软件当前启用的 Mixed Port（混合端口）。本文示例为 7897），选择对应的协议类型（对于chatGPT，本文选择SOCKS version 5），如下图所示</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E7%BD%AE.png" alt="代理服务器设置" title="代理服务器设置" style="display:block;width:50%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<p>配置完代理服务器后，如有弹出是否设置default proxy server的提示，选择否即可。接下来配置代理规则，点击菜单栏的Profile -&gt; Proxification Rules，添加一个新的规则，填写规则名称、应用程序（这里只需要填写应用名称，多个应用可以使用分号间隔，重点是codex.exe），配置的三个exe可以参考以下文本</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">codex.exe; chatgpt.exe; codex-code-mode-host.exe</span><br></pre></td></tr></table></figure>
+
+<p>目标主机保持Any，动作选择刚才设置的代理服务器（即Proxy SOCKS5 127.0.0.1:7897），其他选项保持默认即可，需要按确定按钮，如下图所示</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/%E4%BB%A3%E7%90%86%E8%A7%84%E5%88%99%E8%AE%BE%E7%BD%AE.png" alt="代理规则设置" title="代理规则设置" style="display:block;width:50%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<p>配置完后查看整体规则列表，确保刚刚添加的规则与上述设置一致，其他Localhost和Default的规则保持默认即可，如下图所示</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/%E4%BB%A3%E7%90%86%E8%A7%84%E5%88%99%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C.png" alt="代理规则列表" title="代理规则列表" style="display:block;width:65%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<p>配置完规则后开始配置DNS名称解析设置，点击菜单栏的Profile -&gt; Name Resolution，进行如下设置</p>
+<ol>
+<li>取消勾选<code>Detect DNS settings automatically</code>（自动检测DNS设置）</li>
+<li>勾选 <code>Resolve hostnames through proxy</code>（通过代理解析主机名称）</li>
+<li>选择 <code>Resolve ONLY the following</code>（仅仅解析以下主机名），并在下方的文本框中添加如下域名</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">chatgpt.com</span><br><span class="line">*.chatgpt.com</span><br><span class="line">openai.com</span><br><span class="line">*.openai.com</span><br><span class="line">oaistatic.com</span><br><span class="line">*.oaistatic.com</span><br><span class="line">oaiusercontent.com</span><br><span class="line">*.oaiusercontent.com</span><br><span class="line">statsig.com</span><br><span class="line">*.statsig.com</span><br><span class="line">*.statsigapi.net</span><br><span class="line">*.featuregates.org </span><br></pre></td></tr></table></figure>
+
+<p>最后确定设置，配置如下图所示</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/dns%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE.png" alt="DNS解析设置" title="DNS解析设置" style="display:block;width:60%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>以上配置完成后，打开Clash verge或其他代理软件，选择一个能够正常访问ChatGPT的节点，关闭TUN模式，打开chatGPT桌面端，进入codex功能，开启对话后，若不再出现连续五次 Reconnecting，即表示配置完成，而Proxifier的log为<code>codex.exe - chatGPT.com:443 open through proxy 127.0.0.1:7897 SOCKS5</code>，如下图所示，说明codex.exe的网络流量已经成功通过代理服务器转发。</p>
+<img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/proxifier%E6%97%A5%E5%BF%97.png" alt="Proxifier日志" title="Proxifier日志" style="display:block;width:60%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
+
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>通过以上设置，我们可以定制化规则单个应用的网络流量转发，而不影响其他应用的网络连接，完美解决了chatGPT桌面端codex功能在国内使用时的reconnect问题，同时遇到其他应用网络连接问题时，也可以使用Proxifier进行定制化规则设置，解决特定应用的网络连接问题。</p>
+<p>笔者并未深入学习过计算机网络相关知识，如有错误或不当之处，欢迎指正。在此特别鸣谢codex的帮助。</p>
+]]></content>
+      <categories>
+        <category>工具使用</category>
+      </categories>
+      <tags>
+        <tag>chatGPT</tag>
+        <tag>codex</tag>
+        <tag>Proxifier</tag>
+        <tag>网络问题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《你的名字。》：视听盛宴</title>
     <url>/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/</url>
     <content><![CDATA[<blockquote>
@@ -44,18 +98,24 @@
 <h2 id="故事与叙事节奏"><a href="#故事与叙事节奏" class="headerlink" title="故事与叙事节奏"></a>故事与叙事节奏</h2><p>《你的名字。》的故事在当时看来也不算是具有很大创新性的题材，泷和三叶在相隔三年的时间线上在梦中互换身体，三叶所在的糸守镇遭遇了千年一遇的陨石撞击，包括三叶在内的小镇大部分人都在灾难中去世，泷在意识到不再与三叶互换身体后想要寻找三叶却意外发现糸守镇三年前的灾难。借助神明等奇幻的力量，泷重返三年前三叶的身体之中并最终让三叶得以拯救小镇的人，也使得自己能与三叶在未来相遇。</p>
 <p>电影的叙事采用了时空类故事会使用的、前期埋藏大量伏笔的方式（类似于命运石之门）。在前十几分钟通过对三叶的日常生活和神社塑造了三叶的性格：<strong>软弱、不自信</strong>，然后中间伴随着快节奏的《前前前世》使用蒙太奇闪过两人交换的日常，主题曲戛然而止时便开始推进电影的核心事件——神社与陨石，在这里暗示神社就是时空穿越的关键。在灾难发生后，主视角回到泷身上，当泷不再与三叶交换身体后总会想见她，这里进入故事的低谷部分，随着泷不断地发现小镇的真相，情绪不断向下沉，在遇难者名单中发现三叶的名字时达到最低点。而后随着男主想起神社的作用，并前往神社、喝下口嚼酒、穿越为三叶再次回到神社相见，情绪不断上升，同时这里也是对两人之间感情的第一次正面表现。<strong>表明心意后三叶改变了自己</strong>，成功拯救了小镇人，情绪进入小高潮，但两人未能相识的遗憾仍横在观众心中。而最后《没什么大不了》的鼓声一步步推向高潮，直到结局进入最高潮。</p>
 <p>电影的故事节奏如上是一部非常典型的商业片节奏，它试图调动观众的情绪从小高潮到低谷再到高潮，并最终放慢了故事节奏，使得最高潮延迟到来，达到一种接近延迟满足的效果。而电影极其优秀的作画和完美的音乐使得它成功实现了对观众的情绪的调动。</p>
-<h2 id="画面"><a href="#画面" class="headerlink" title="画面"></a>画面</h2><p>作为新海诚最为知名的作品，《你的名字。》在画面上无可挑剔，达到了每一帧都可以作为壁纸的水平。全片主要使用蓝色系，在表现糸守镇时辅以绿色，给人以一种阳光、富有生命力的感觉，而在涉及到奇幻元素时，画面以橙红色、蓝色为主，与黄昏之时的情节相契合，给人以一种梦幻但又异常美好的感觉。<br><img src="流星划过.png" title="流星划过" width="75%" height="75%" /><br><img src="糸守湖黄昏景.png" title="糸守湖黄昏" width="75%" height="75%" /><br><img src="流星落下.png" title="流星落下" width="75%" height="75%" /></p>
+<h2 id="画面"><a href="#画面" class="headerlink" title="画面"></a>画面</h2><p>作为新海诚最为知名的作品，《你的名字。》在画面上无可挑剔，达到了每一帧都可以作为壁纸的水平。全片主要使用蓝色系，在表现糸守镇时辅以绿色，给人以一种阳光、富有生命力的感觉，而在涉及到奇幻元素时，画面以橙红色、蓝色为主，与黄昏之时的情节相契合，给人以一种梦幻但又异常美好的感觉。</p>
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E6%B5%81%E6%98%9F%E5%88%92%E8%BF%87.png" class="image-width-75" title="流星划过">
+
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E7%B3%B8%E5%AE%88%E6%B9%96%E9%BB%84%E6%98%8F%E6%99%AF.png" class="image-width-75" title="糸守湖黄昏">
+
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E6%B5%81%E6%98%9F%E8%90%BD%E4%B8%8B.png" class="image-width-75" title="流星落下">
+
 <h2 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h2><p>在音乐上，作为一个并不高明的观众，我至今仍未发现另一部能将音乐与电影的节奏、意境结合得如此完美的作品。事实上，电影的节奏完全是由所音乐把控，开局的快节奏是由《<strong>前前前世</strong>》所调动，中期随着《<strong>御神体</strong>》蜿蜒缠绕的旋律表现了时空交织的奇幻色彩，同时又引导观众的情绪向下落，为灾难的发生铺垫情绪。而后《<strong>秋祭り</strong>》低沉的音调仿佛使观众情绪更加低迷，《<strong>図書館</strong>》缓慢地让全篇情绪达到最低点。随后泷前往神社，《<strong>御神体へ再び</strong>》采用快速重复的旋律将情绪不断提升，紧接着，便是那段神级演出——《<strong>三叶的主题曲</strong>》。在这一段演出中第一次正面叙述三叶对泷的情感，独自一人坐上前往东京的列车，音乐的旋律就像是三叶的内心，起起伏伏，不断调动观众情绪上扬。《<strong>黄昏之时</strong>》和《<strong>火花</strong>》延续了这一情绪，将剧情推向高潮，但同时也并没有一次性释放，而是保留了一定悬念。在最后，《<strong>没什么大不了</strong>》电影版的前奏鼓声插入仿佛是在不断挑起观众最后的情绪，随着两人最终得以相见全片情绪达到最高潮。</p>
 <h2 id="三叶的主题曲"><a href="#三叶的主题曲" class="headerlink" title="三叶的主题曲"></a>三叶的主题曲</h2><p>《你的名字。》之所以让我如此震撼，一个重要原因便是《<strong>三叶的主题曲</strong>》的那段演出。在这段演出中，音乐完美地表现了三叶鼓起勇气，花光所有积蓄前往东京见泷，但又忐忑不安的内心。音乐中带有一种难以言表的悲伤情绪，让观众沉浸地代入三叶的视角，满怀期待但又一次一次的落空，以至于即使已经听过接近千遍，再听到它的旋律，我的心头仍会颤抖，脑海中浮现出三叶紧张但又期待地在找寻的画面，感受到这份酸涩。</p>
 <p>同时，在这一段演出中，三叶第一次展现出了她的改变。从我的认识来看，动画中的人物要想立体起来，就需要有人物弧光的变化，简单来说人物不应该是单薄的人设，而是随着剧情推进进行成长。三叶在没有遇见泷之前，因为父亲是糸守镇的镇长但从小却接受外婆的传统教育，承担镇里祭祀活动，同时接受镇里的资助而感到自卑，在上下学路上遇见同学都抬不起头。而在泷的影响下，三叶逐渐开始摆脱了这一困扰，鼓起勇气去见泷以及在最后能够勇敢地向父亲表明自己的态度，这实际上就已经证明了泷已经成为了三叶的重要之人，这比直接用言语去表达更加深刻和细腻。</p>
 <p>需要指出的是，相比于对三叶的细腻刻画，电影对于泷的刻画显然没有达到相同水平，从影片开头到结尾，泷的性格与行为始终没有发生改变，更多需要靠直白的台词来表达泷的情感变化，这点略显不足。</p>
-<img src="三叶前往东京.png" title="三叶前往东京" width="75%" height="75%" />
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E4%B8%89%E5%8F%B6%E5%89%8D%E5%BE%80%E4%B8%9C%E4%BA%AC.png" class="image-width-75" title="三叶前往东京">
 
-<img src="骑车前往御神体.png" title="骑车前往御神体" width="75%" height="75%" />
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E9%AA%91%E8%BD%A6%E5%89%8D%E5%BE%80%E5%BE%A1%E7%A5%9E%E4%BD%93.png" class="image-width-75" title="骑车前往御神体">
 
-<img src="天桥.png" title="天桥等待" width="75%" height="75%" />
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E5%A4%A9%E6%A1%A5.png" class="image-width-75" title="天桥等待">
 
-<img src="地铁站等待.png" title="地铁站等待" width="75%" height="75%" />
+<img src="/2025/08/05/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97%E3%80%82%EF%BC%9A%E8%A7%86%E5%90%AC%E7%9B%9B%E5%AE%B4/%E5%9C%B0%E9%93%81%E7%AB%99%E7%AD%89%E5%BE%85.png" class="image-width-75" title="地铁站等待">
 
 <!-- <center><b>三叶前往东京</b></center> -->
 

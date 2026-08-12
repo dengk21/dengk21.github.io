@@ -1250,7 +1250,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #606937;
+    background: #c9008f;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2829,4 +2829,25 @@ header.header {
   .sidebar {
     display: none;
   }
+}
+.post-body img.image-width-10 {
+  display: block;
+  width: 10%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post-body img.image-width-25 {
+  display: block;
+  width: 25%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.post-body img.image-width-75 {
+  display: block;
+  width: 75%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
