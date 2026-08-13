@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://dengk21.github.io/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/dns%E8%A7%A3%E6%9E%90%E8%AE%BE%E7%BD%AE.png">
 <meta property="og:image" content="https://dengk21.github.io/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/proxifier%E6%97%A5%E5%BF%97.png">
 <meta property="article:published_time" content="2026-08-12T07:18:34.000Z">
-<meta property="article:modified_time" content="2026-08-12T09:58:08.693Z">
+<meta property="article:modified_time" content="2026-08-13T02:42:37.837Z">
 <meta property="article:author" content="SHdragon">
 <meta property="article:tag" content="chatGPT">
 <meta property="article:tag" content="codex">
@@ -273,7 +273,7 @@
 <p>这类问题通常不是代理节点失效，而是ChatGPT&#x2F;Codex桌面端会建立多条网络连接。关闭TUN后，其中部分实时连接可能没有成功经过系统代理，因而无法连接OpenAI服务器，并自动重试五次。连续重试五次仍未成功后，界面显示重连失败；部分普通功能可能仍然可用，但依赖实时连接的功能会受到影响。</p>
 <p>目前网络中的解决方案有两个。其一是更改codex的本地配置文件 <code>~/.codex/config.toml</code>，更改codex的网络配置，但此方法可能因为codex&#x2F;chatGPT的版本更新而失效，且部分案例有失败的情况。其二是在使用clash verge等代理软件时，开启TUN模式（虚拟网卡），TUN模式会在系统网络层接管大部分应用的流量，再按照Clash规则进行转发，但TUN模式在部分电脑或网络环境中可能导致其他应用卡顿、掉线或兼容性问题。</p>
 <p>笔者借助Proxifier软件可以成功解决此问题，且不会影响其他应用的网络连接。Proxifier是一款可以定制化将某些应用的网络流量通过指定代理服务器转发的软件，非常适合解决特定应用的网络连接问题。</p>
-<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><h3 id="安装Proxifier"><a href="#安装Proxifier" class="headerlink" title="安装Proxifier"></a>安装Proxifier</h3><p>Proxifier是一款付费软件，提供试用期，可以在网络中搜寻到破解版资源，此处不提供安装和破解方法。建议安装Proxifier Standard Edition，笔者后续以Proxifier Standard Edition v4.14 x64为例进行说明。</p>
+<h2 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h2><h3 id="安装Proxifier"><a href="#安装Proxifier" class="headerlink" title="安装Proxifier"></a>安装Proxifier</h3><p>Proxifier是一款付费软件，提供试用期，此处不提供安装方法。建议安装Proxifier Standard Edition，笔者后续以Proxifier Standard Edition v4.14 x64为例进行说明。</p>
 <h3 id="配置Proxifier"><a href="#配置Proxifier" class="headerlink" title="配置Proxifier"></a>配置Proxifier</h3><p>打开Proxifier，点击菜单栏的Profile -&gt; Proxy Servers，添加一个新的代理服务器，填写你使用的代理软件（如clash verge）的本地代理地址（127.0.0.1）和端口（端口请填写 Clash Verge或对应代理软件当前启用的 Mixed Port（混合端口）。本文示例为 7897），选择对应的协议类型（对于chatGPT，本文选择SOCKS version 5），如下图所示</p>
 <img src="/2026/08/12/Codex%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BE%E7%BD%AE.png" alt="代理服务器设置" title="代理服务器设置" style="display:block;width:50%;max-width:100%;height:auto;margin-left:auto;margin-right:auto">
 
